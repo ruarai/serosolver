@@ -485,7 +485,8 @@ run_MCMC <- function(par_tab,
                 new_indiv_likelihoods <- prop_gibbs$old_probs
                 new_infection_histories <- prop_gibbs$new_infection_history
 
-                new_likelihoods_calculated <- TRUE
+                # Only seems to work for version 2?
+                new_likelihoods_calculated <- version == 2
 
                 overall_swap_proposals <- prop_gibbs$overall_swap_proposals
                 overall_add_proposals <- prop_gibbs$overall_add_proposals
@@ -527,8 +528,6 @@ run_MCMC <- function(par_tab,
             histiter[indiv_sub_sample] <- histiter[indiv_sub_sample] + 1
         }
 
-        # Hack
-      new_likelihoods_calculated <- FALSE
         ## Calculate new likelihood with these infection histories
         ## If we didn't calculate the new likelihoods above, then need to do so here
         if (!new_likelihoods_calculated) {
