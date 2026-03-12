@@ -526,6 +526,9 @@ run_MCMC <- function(par_tab,
             histiter_move[move] <- histiter_move[move] + 1
             histiter[indiv_sub_sample] <- histiter[indiv_sub_sample] + 1
         }
+
+        # Hack
+      new_likelihoods_calculated <- FALSE
         ## Calculate new likelihood with these infection histories
         ## If we didn't calculate the new likelihoods above, then need to do so here
         if (!new_likelihoods_calculated) {
