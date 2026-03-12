@@ -507,9 +507,16 @@ List inf_hist_prop_prior_v2_and_v4(const NumericVector &theta, // Model paramete
       	  }
       	  m_1_old = m + old_entry;
       	  m_1_new = m + new_entry;
-      	  
-      	  prior_old = prior_lookup(m_1_old, year, group_id);
-      	  prior_new = prior_lookup(m_1_new, year, group_id);
+			
+      	  if(!prior_on_total){
+	        prior_old = prior_lookup(m_1_old, year, group_id);
+	        prior_new = prior_lookup(m_1_new, year, group_id);
+	      } else {
+	         // Calculate the log beta directly for version 4. 
+	         // 'n' is total_alive - 1, so 'n + 1.0' restores the full count of individuals.
+	         prior_old = R::lbeta(m_1_old + alpha, n + 1.0 - m_1_old + beta);
+		  	 prior_new = R::lbeta(m_1_new + alpha, n + 1.0 - m_1_new + beta);
+		  }
       	}
       	
       	if(new_entry != old_entry){
