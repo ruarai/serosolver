@@ -147,10 +147,10 @@ create_age_mask <- function(DOBs, strain_isolation_times) {
 #' @export
 create_strain_mask <- function(titre_dat, strain_isolation_times) {
   ids <- unique(titre_dat$individual)
-  strain_mask <- sapply(ids, function(x) {
-    sample_times <- titre_dat$samples[titre_dat$individual == x]
-    max(which(max(sample_times) >= strain_isolation_times))
-  })
+
+  # Modified to return max possible infection time
+  strain_mask <- rep(which.max(strain_isolation_times), length(ids))
+
   return(strain_mask)
 }
 
@@ -406,6 +406,8 @@ setup_titredat_for_posterior_func <- function(titre_dat, antigenic_map=NULL, str
   }
   age_mask <- create_age_mask(DOBs, strain_isolation_times)
   strain_mask <- create_strain_mask(titre_dat, strain_isolation_times)
+
+
   masks <- data.frame(cbind(age_mask, strain_mask))
 
   if (is.null(n_alive)) {

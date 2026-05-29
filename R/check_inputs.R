@@ -15,6 +15,7 @@ check_inf_hist <- function(titre_dat, strain_isolation_times, inf_hist){
     DOBs <- get_DOBs(titre_dat)
     age_mask <- create_age_mask(DOBs[,2],strain_isolation_times)
     strain_mask <- create_strain_mask(titre_dat, strain_isolation_times)
+    
     before_born <- logical(length(age_mask))
     after_sample <- logical(length(strain_mask))
     res <- logical(length(age_mask))
