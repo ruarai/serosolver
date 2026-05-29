@@ -216,7 +216,10 @@ run_MCMC <- function(par_tab,
   }
   age_mask <- create_age_mask(DOBs, strain_isolation_times)
   ## Create strain mask
-  strain_mask <- create_strain_mask(titre_dat, strain_isolation_times)
+  #strain_mask <- create_strain_mask(titre_dat, strain_isolation_times)
+  # Create strain mask (force to set to max strain_isolation_times)
+  strain_mask <- rep(max(strain_isolation_times), length(age_mask))
+
   masks <- data.frame(cbind(age_mask, strain_mask))
 
   group_ids_vec <- unique(titre_dat[, c("individual", "group")])[, "group"] - 1
